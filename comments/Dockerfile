@@ -8,7 +8,7 @@ WORKDIR /usr/app
 # Install dependencies
 COPY ./package.json ./
 RUN npm install -g pm2
-RUN npm install --production
+RUN npm install --omit=dev
 
 # Copy codebase
 COPY ./ ./
