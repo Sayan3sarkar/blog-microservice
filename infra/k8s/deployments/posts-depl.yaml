@@ -16,3 +16,17 @@ spec:
         - name: posts
           image: sayan3sarkar/posts-service
           # imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-svc
+spec:
+  # type: ClusterIP # Commmented out since k8 defaults to ClusterIP
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

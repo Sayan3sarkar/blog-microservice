@@ -10,16 +10,20 @@ app.use(cors());
 
 app.use(express.json());
 
+const port = 4000; // posts-service-port
+const eventBusService = "event-bus-svc"; // ideally should be in a .env file
+const eventBusPort = "4005"; // ideally should be in a .env file
+const eventBusUrl = `http://${eventBusService}:${eventBusPort}/events`;
+
+const eventTypeEnum = {
+  postCreated: "PostCreated",
+};
+
 const posts = {};
 
 app.get("/posts", (req, res) => {
   res.send(posts);
 });
-
-const eventBusUrl = "http://localhost:4005/events";
-const eventTypeEnum = {
-  postCreated: "PostCreated",
-};
 
 app.post("/posts", async (req, res) => {
   const id = randomBytes(4).toString("hex");
@@ -48,7 +52,7 @@ app.post("/events", (req, res) => {
   res.send();
 });
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log("change in posts service: v1");
-  console.log("Posts Service running on 4000");
+  console.log(`Posts Service running on ${port}`);
 });
