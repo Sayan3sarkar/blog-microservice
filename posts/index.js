@@ -49,5 +49,6 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4000, () => {
+  console.log("change in posts service: v1");
   console.log("Posts Service running on 4000");
 });
