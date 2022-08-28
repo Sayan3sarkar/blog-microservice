@@ -11,21 +11,23 @@ app.use(cors());
 const port = 4005; // event-bus port
 const serviceEventUrls = {
   postsService: "http://posts-clusterip-svc:4000/events",
-  // commentsService: "http://localhost:4001/events",
-  // queryService: "http://localhost:4002/events",
-  // moderationService: "http://localhost:4003/events",
+  commentsService: "http://comments-clusterip-svc:4001/events",
+  queryService: "http://query-clusterip-svc:4002/events",
+  moderationService: "http://moderation-clusterip-svc:4003/events",
 };
 
 const events = [];
 app.post("/events", async (req, res) => {
   const event = req.body;
   events.push(event);
+
+  console.log("event body in bus-service", event);
   try {
     const promises = [
       axios.post(serviceEventUrls.postsService, event),
-      // axios.post(serviceEventUrls.commentsService, event),
-      // axios.post(serviceEventUrls.queryService, event),
-      // axios.post(serviceEventUrls.moderationService, event),
+      axios.post(serviceEventUrls.commentsService, event),
+      axios.post(serviceEventUrls.queryService, event),
+      axios.post(serviceEventUrls.moderationService, event),
     ];
 
     await Promise.all(promises);
@@ -46,5 +48,6 @@ app.get("/events", (req, res) => {
 });
 
 app.listen(port, () => {
+  console.log(JSON.stringify(serviceEventUrls));
   console.log(`event bus running on ${port}`);
 });

@@ -18,7 +18,10 @@ const eventTypeEnum = {
   commentModerated: "CommentModerated",
 };
 
-const eventBusUrl = "http://localhost:4005/events";
+const eventBusService = "event-bus-svc"; // ideally should be in a .env file
+const eventBusPort = "4005"; // ideally should be in a .env file
+const eventBusUrl = `http://${eventBusService}:${eventBusPort}/events`;
+const port = 4003;
 
 app.post("/events", async (req, res) => {
   let { type, data: eventData } = req.body;
@@ -55,6 +58,6 @@ app.post("/events", async (req, res) => {
   }
 });
 
-app.listen(4003, () => {
-  console.log(`Moderation Service running on port 4003`);
+app.listen(port, () => {
+  console.log(`Moderation Service running on port ${port}`);
 });

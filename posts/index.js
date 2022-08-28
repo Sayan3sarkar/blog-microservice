@@ -39,11 +39,11 @@ app.post("/posts", async (req, res) => {
         title,
       }),
     });
+    res.status(201).send(posts[id]);
   } catch (err) {
     console.log("Error emitting event to event bus from posts service", err);
+    res.status(500).send("Error");
   }
-
-  res.status(201).send(posts[id]);
 });
 
 app.post("/events", (req, res) => {

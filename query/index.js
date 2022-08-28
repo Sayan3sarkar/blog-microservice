@@ -32,7 +32,10 @@ const eventTypeEnum = {
   postCreated: "PostCreated",
 };
 
-const eventBusUrl = "http://localhost:4005/events";
+const eventBusService = "event-bus-svc"; // ideally should be in a .env file
+const eventBusPort = "4005"; // ideally should be in a .env file
+const eventBusUrl = `http://${eventBusService}:${eventBusPort}/events`;
+const port = 4002;
 
 function handleEvent(type, data) {
   console.log("type", type, "data", data);
@@ -72,8 +75,8 @@ app.post("/events", (req, res) => {
   res.send("OK");
 });
 
-app.listen(4002, async () => {
-  console.log("Query service running on 4002");
+app.listen(port, async () => {
+  console.log(`Query service running on ${port}`);
 
   try {
     const { data: events } = await axios.get(eventBusUrl);

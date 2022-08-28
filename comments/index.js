@@ -31,7 +31,9 @@ const eventTypeEnum = {
   commentUpdated: "CommentUpdated",
 };
 
-const eventBusUrl = "http://localhost:4005/events";
+const eventBusService = "event-bus-svc"; // ideally should be in a .env file
+const eventBusPort = "4005"; // ideally should be in a .env file
+const eventBusUrl = `http://${eventBusService}:${eventBusPort}/events`;
 
 app.post("/posts/:id/comments", async (req, res) => {
   const commentId = randomBytes(4).toString("hex");
@@ -99,6 +101,7 @@ app.post("/events", async (req, res) => {
   }
 });
 
-app.listen(4001, () => {
-  console.log("Comments Service running on 4001");
+const port = 4001;
+app.listen(port, () => {
+  console.log(`Comments Service running on ${port}`);
 });
