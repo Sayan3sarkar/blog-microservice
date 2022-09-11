@@ -31,9 +31,7 @@ const eventTypeEnum = {
   commentUpdated: "CommentUpdated",
 };
 
-const eventBusService = "event-bus-svc"; // ideally should be in a .env file
-const eventBusPort = "4005"; // ideally should be in a .env file
-const eventBusUrl = `http://${eventBusService}:${eventBusPort}/events`;
+const eventBusUrl = "http://event-bus-svc:4005/events";
 
 app.post("/posts/:id/comments", async (req, res) => {
   const commentId = randomBytes(4).toString("hex");
